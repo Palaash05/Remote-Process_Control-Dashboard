@@ -6,8 +6,28 @@ from django.http import request
 
 def dashboard(request):
     # return HttpResponse("Something")
-    return render(request, "main/home.html", context={})
+    return render(request, "main/dashboard.html", context={})
 
 
-def stage(request, stage_num):
-    return render(request, "main/stage.html")
+def banbury(request):
+    return render(request, "main/banbury.html")
+
+
+def fabCalendar(request):
+    return render(request, "main/fabCalendar.html")
+
+
+def beadWinder(request):
+    return render(request, "main/beadWinder.html")
+
+
+def tread(request):
+    return render(request, "main/tread.html")
+
+
+def curing(request):
+    return render(request, "main/curing.html")
+
+
+def stats(request):
+    return render(request, "main/stats.html")

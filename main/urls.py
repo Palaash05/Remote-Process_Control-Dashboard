@@ -20,5 +20,10 @@ app_name = "main"
 
 urlpatterns = [
     path('', views.dashboard, name="dashboard"),
-    path('stage/<stage_num>', views.stage, name="stage"),
+    path('banbury', views.banbury, name="banbury"),
+    path('fabCalendar', views.fabCalendar, name="fabCalendar"),
+    path('beadWinder', views.beadWinder, name="beadWinder"),
+    path('tread', views.tread, name="tread"),
+    path('curing', views.curing, name="curing"),
+    path('stats', views.stats, name="stats"),
 ]
