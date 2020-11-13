@@ -3,6 +3,7 @@
 <html>
 
 <head>
+    <!--<meta http-equiv="refresh" content="3">-->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
     <title>Scout</title>
@@ -11,6 +12,9 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" />
     <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
 </head>
 
 <body id="page-top">
@@ -32,53 +36,58 @@
     </div>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/chart.min.js' %}"></script>
+    <!--<script src="{% static 'js/chart.min.js' %}"></script>-->
     <script src="{% static 'js/bs-init.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="{% static 'js/sidebar.js' %}"></script>
     <script src="{% static 'js/theme.js' %}"></script>
-    <script>document.getElementById("DateTime").innerHTML = DateandTime();
-        function DateandTime() {
-            var d = new Date(),
-                minutes =
-                    d.getMinutes().toString().length == 1
-                        ? "0" + d.getMinutes()
-                        : d.getMinutes(),
-                hours =
-                    d.getHours().toString().length == 1
-                        ? "0" + d.getHours()
-                        : d.getHours(),
-                ampm = d.getHours() >= 12 ? "pm" : "am",
-                months = [
-                    "Jan",
-                    "Feb",
-                    "Mar",
-                    "Apr",
-                    "May",
-                    "Jun",
-                    "Jul",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec",
-                ],
-                days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-            return (
-                days[d.getDay()] +
-                " " +
-                months[d.getMonth()] +
-                " " +
-                d.getDate() +
-                " " +
-                d.getFullYear() +
-                " " +
-                hours +
-                ":" +
-                minutes +
-                ampm
-            );
-        }</script>
+
+    <script>
+
+        function Ban_Value(val) {
+            if (val < 22 && val >= 20) {
+                return "green";
+            } else if (val == 22 || val == 18) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Fab_Temp(val) {
+            if (val < 520 && val > 500) {
+                return "green";
+            } else if (val == 520 || val == 500) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Fab_W(val) {
+            if (val < 1.5 && val > 0.5) {
+                return "green";
+            } else if (val == 1.5 || val == 0.5) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+    </script>
+    <script>
+        var value_bead = document.getElementById("bead_val").innerHTML;
+
+        function beadValue(value_bead) {
+            if (value_bead > 600 && value_bead < 650) {
+                return "green";
+            } else if (value_bead == 600 || value_bead == 650) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+    </script>
+
 </body>
 
 </html>

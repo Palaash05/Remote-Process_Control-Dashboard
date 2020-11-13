@@ -26,4 +26,8 @@ urlpatterns = [
     path('tread', views.tread, name="tread"),
     path('curing', views.curing, name="curing"),
     path('stats', views.stats, name="stats"),
+    path('ban_json', views.banbury_json, name="ban_json"),
+    path('dash_json', views.dashboard_json, name="dash_json"),
+    path('fab_json', views.fabric_json, name="fab_json"),
+
 ]
