@@ -101,12 +101,12 @@
                         </h4>
                     </div>
                     <div class="col-4">
-                        <p class="card-text mb-4 text-right" id="DateTime4"></p>
+                        <p class="card-text mb-4 text-right" id="bead_date"></p>
                     </div>
                 </div>
                 <p class="display-5">Current reading:</p>
                 <div class="row">
-                    <p class="display-4 font-weight-bold" id="bead_val">670</p>
+                    <p class="display-4 font-weight-bold" id="bead_val"></p>
                     <p class="display-4 font-weight-bold" id="bead_unit">°C</p>
                 </div>
             </div>
@@ -126,17 +126,17 @@
                 <div class="row">
                     <div class="col-8">
                         <h4 class="font-weight-bold">
-                            Tread Width
+                            Position Error
                         </h4>
                     </div>
                     <div class="col-4">
-                        <p class="card-text mb-4 text-right" id="DateTime5"></p>
+                        <p class="card-text mb-4 text-right" id="tread_date1"></p>
                     </div>
                 </div>
                 <p class="display-5">Current reading:</p>
                 <div class="row font-success">
-                    <p class="display-4 font-weight-bold" id="Fab_w">10</p>
-                    <p class="display-4 font-weight-bold" id="Fab_Wunit">mm</p>
+                    <p class="display-4 font-weight-bold" id="tread_pos"></p>
+                    <p class="display-4 font-weight-bold" id="tread_unit1">mm</p>
                 </div>
             </div>
         </div>
@@ -156,13 +156,13 @@
                         </h4>
                     </div>
                     <div class="col-4">
-                        <p class="card-text mb-4 text-right" id="DateTime6"></p>
+                        <p class="card-text mb-4 text-right" id="tread_date2"></p>
                     </div>
                 </div>
                 <p class="display-5">Current reading:</p>
                 <div class="row">
-                    <p class="display-4 font-weight-bold" id="bead_val">+3</p>
-                    <p class="display-4 font-weight-bold" id="bead_unit">mm/s</p>
+                    <p class="display-4 font-weight-bold" id="tread_speed"></p>
+                    <p class="display-4 font-weight-bold" id="tread_unit2">mmps</p>
                 </div>
             </div>
         </div>
@@ -185,13 +185,13 @@
                         </h4>
                     </div>
                     <div class="col-4">
-                        <p class="card-text mb-4 text-right" id="DateTime7"></p>
+                        <p class="card-text mb-4 text-right" id="cur_date1"></p>
                     </div>
                 </div>
                 <p class="display-5">Current reading:</p>
                 <div class="row font-success">
-                    <p class="display-4 font-weight-bold" id="Fab_w">30</p>
-                    <p class="display-4 font-weight-bold" id="Fab_Wunit">minutes</p>
+                    <p class="display-4 font-weight-bold" id="cur_time"></p>
+                    <p class="display-4 font-weight-bold" id="cur_unit1">minutes</p>
                 </div>
             </div>
         </div>
@@ -211,13 +211,13 @@
                         </h4>
                     </div>
                     <div class="col-4">
-                        <p class="card-text mb-4 text-right" id="DateTime8"></p>
+                        <p class="card-text mb-4 text-right" id="cur_date2"></p>
                     </div>
                 </div>
                 <p class="display-5">Current reading:</p>
                 <div class="row">
-                    <p class="display-4 font-weight-bold" id="bead_val">220</p>
-                    <p class="display-4 font-weight-bold" id="bead_unit">°C</p>
+                    <p class="display-4 font-weight-bold" id="cur_temp"></p>
+                    <p class="display-4 font-weight-bold" id="cur_unit2">°C</p>
                 </div>
             </div>
         </div>
@@ -234,20 +234,46 @@
 
                 // Typical action to be performed when the document is ready:
                 var data = JSON.parse(xhttp.responseText);
-                document.getElementById('ban_val').innerText = data.ban_width
-                document.getElementById('ban_date').innerText = data.ban_date
+                document.getElementById("ban_val").innerText = data.ban_width
+                document.getElementById("ban_date").innerText = data.ban_date
                 document.getElementById("ban_val").style.color = Ban_Value(data.ban_width);
                 document.getElementById("ban_unit").style.color = Ban_Value(data.ban_width);
 
-                document.getElementById('fab_temp').innerText = data.fab_temp
-                document.getElementById('fab_date1').innerText = data.fab_date
+                document.getElementById("fab_temp").innerText = data.fab_temp
+                document.getElementById("fab_date1").innerText = data.fab_date
                 document.getElementById("fab_temp").style.color = Fab_Temp(data.fab_temp);
                 document.getElementById("fab_Tunit").style.color = Fab_Temp(data.fab_temp);
 
-                document.getElementById('fab_w').innerText = data.fab_w
-                document.getElementById('fab_date2').innerText = data.fab_date
+                document.getElementById("fab_w").innerText = data.fab_w
+                document.getElementById("fab_date2").innerText = data.fab_date
                 document.getElementById("fab_w").style.color = Fab_W(data.fab_w);
                 document.getElementById("fab_Wunit").style.color = Fab_W(data.fab_w);
+
+                document.getElementById("bead_val").innerText = data.bead_temp
+                document.getElementById("bead_date").innerText = data.bead_date
+                document.getElementById("bead_val").style.color = Bead_Temp(data.bead_temp);
+                document.getElementById("bead_unit").style.color = Bead_Temp(data.bead_temp);
+
+                document.getElementById('tread_pos').innerText = data.tread_pos
+                document.getElementById('tread_date1').innerText = data.tread_date
+                document.getElementById("tread_pos").style.color = Tread_Pos(data.tread_pos);
+                document.getElementById("tread_unit1").style.color = Tread_Pos(data.tread_pos);
+
+                document.getElementById('tread_speed').innerText = data.tread_speed
+                document.getElementById('tread_date2').innerText = data.tread_date
+                document.getElementById("tread_speed").style.color = Tread_Speed(data.tread_speed);
+                document.getElementById("tread_unit2").style.color = Tread_Speed(data.tread_speed);
+
+                document.getElementById('cur_time').innerText = data.cur_time
+                document.getElementById('cur_date1').innerText = data.cur_date
+                document.getElementById("cur_time").style.color = Cur_Time(data.cur_time);
+                document.getElementById("cur_unit1").style.color = Cur_Time(data.cur_time);
+
+                document.getElementById('cur_temp').innerText = data.cur_temp
+                document.getElementById('cur_date2').innerText = data.cur_date
+                document.getElementById("cur_temp").style.color = Cur_Temp(data.cur_temp);
+                document.getElementById("cur_unit2").style.color = Cur_Temp(data.cur_temp);
+
             }
         };
         xhttp.open("GET", "/dash_json", true);

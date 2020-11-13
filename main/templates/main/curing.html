@@ -11,14 +11,14 @@
             <div class="card-body pb-0">
                 <!-- Title -->
                 <h4 class="card-title font-weight-bold m-0" style="color: #4e73df">
-                    Time
+                    Moulding Time
                 </h4>
                 <!-- Text -->
-                <p class="card-text mb-4 text-right" id="DateTime"></p>
+                <p class="card-text mb-4 text-right" id="cur_date1"></p>
                 <p class="display-5">Current reading:</p>
                 <div class="row">
-                    <p class="display-4 font-weight-bold" id="cur_val">30</p>
-                    <p class="display-4 font-weight-bold" id="cur_unit">minutes</p>
+                    <p class="display-4 font-weight-bold" id="cur_time"></p>
+                    <p class="display-4 font-weight-bold" id="cur_unit1">minutes</p>
                 </div>
             </div>
         </div>
@@ -28,8 +28,7 @@
             </div>
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas
-                        data-bs-chart='{"type":"line","data":{"labels":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug"],"datasets":[{"label":"Earnings","fill":true,"data":["0","10000","5000","15000","10000","20000","15000","25000"],"backgroundColor":"rgba(78, 115, 223, 0.05)","borderColor":"rgba(78, 115, 223, 1)"}]},"options":{"maintainAspectRatio":false,"legend":{"display":false},"title":{},"scales":{"xAxes":[{"gridLines":{"color":"rgb(234, 236, 244)","zeroLineColor":"rgb(234, 236, 244)","drawBorder":false,"drawTicks":false,"borderDash":["2"],"zeroLineBorderDash":["2"],"drawOnChartArea":false},"ticks":{"fontColor":"#858796","padding":20}}],"yAxes":[{"gridLines":{"color":"rgb(234, 236, 244)","zeroLineColor":"rgb(234, 236, 244)","drawBorder":false,"drawTicks":false,"borderDash":["2"],"zeroLineBorderDash":["2"]},"ticks":{"fontColor":"#858796","padding":20}}]}}}'></canvas>
+                    <canvas id="curChart1"></canvas>
                 </div>
             </div>
         </div>
@@ -42,16 +41,130 @@
             </div>
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas
-                        data-bs-chart='{"type":"doughnut","data":{"labels":["Direct","Social","Referral"],"datasets":[{"label":"","backgroundColor":["green","orange","red"],"borderColor":["#ffffff","#ffffff","#ffffff"],"data":["50","30","15"]}]},"options":{"maintainAspectRatio":false,"legend":{"display":false},"title":{}}}'></canvas>
+                    <canvas id="curChart2"></canvas>
                 </div>
                 <div class="text-center small mt-4">
-                    <span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;Direct</span><span
-                        class="mr-2"><i class="fas fa-circle text-warning"></i>&nbsp;Social</span><span class="mr-2"><i
-                            class="fas fa-circle text-danger"></i>&nbsp;Refferal</span>
+                    <span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;Success</span><span
+                        class="mr-2"><i class="fas fa-circle text-warning"></i>&nbsp;Warning</span><span class="mr-2"><i
+                            class="fas fa-circle text-danger"></i>&nbsp;Danger</span>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<div class="row flex-lg-fill">
+    <div class="col-lg-6 col-xl-8">
+        <div class="card shadow mb-4">
+            <div class="card-body pb-0">
+                <!-- Title -->
+                <h4 class="card-title font-weight-bold m-0" style="color: #4e73df">
+                    Moulding Temperature
+                </h4>
+                <!-- Text -->
+                <p class="card-text mb-4 text-right" id="cur_date2"></p>
+                <p class="display-5">Current reading:</p>
+                <div class="row">
+                    <p class="display-4 font-weight-bold" id="cur_temp"></p>
+                    <p class="display-4 font-weight-bold" id="cur_unit2">°C</p>
+                </div>
+            </div>
+        </div>
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="text-primary font-weight-bold m-0">Temperature</h4>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="curChart3"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6 col-xl-4">
+        <div class="card shadow mb-4">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="text-primary font-weight-bold m-0">Temperature</h4>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="curChart4"></canvas>
+                </div>
+                <div class="text-center small mt-4">
+                    <span class="mr-2"><i class="fas fa-circle text-success"></i>&nbsp;Success</span><span
+                        class="mr-2"><i class="fas fa-circle text-warning"></i>&nbsp;Warning</span><span class="mr-2"><i
+                            class="fas fa-circle text-danger"></i>&nbsp;Danger</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var ctx1 = document.getElementById('curChart1').getContext('2d');
+    var ctx2 = document.getElementById('curChart2').getContext('2d');
+    var ctx3 = document.getElementById('curChart3').getContext('2d');
+    var ctx4 = document.getElementById('curChart4').getContext('2d');
+
+    function cur_request() {
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+
+                // Typical action to be performed when the document is ready:
+                var data = JSON.parse(xhttp.responseText);
+                document.getElementById('cur_time').innerText = data.cur_time
+                document.getElementById('cur_date1').innerText = data.cur_date
+                document.getElementById("cur_time").style.color = Cur_Time(data.cur_time);
+                document.getElementById("cur_unit1").style.color = Cur_Time(data.cur_time);
+
+                document.getElementById('cur_temp').innerText = data.cur_temp
+                document.getElementById('cur_date2').innerText = data.cur_date
+                document.getElementById("cur_temp").style.color = Cur_Temp(data.cur_temp);
+                document.getElementById("cur_unit2").style.color = Cur_Temp(data.cur_temp);
+
+                var chart1 = {
+                    "type": "line", "data": { "labels": data.curdateList, "datasets": [{ "label": "Width", "fill": true, "data": data.curList1, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
+                        "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
+                            "xAxes": [{
+                                "gridLines": {
+                                    "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
+                                        "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
+                                }, "ticks": { "fontColor": "#858796", "padding": 20 }
+                            }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
+                        }
+                    }
+                }
+                var chart2 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.curCount1 }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
+
+                var chart3 = {
+                    "type": "line", "data": { "labels": data.curdateList, "datasets": [{ "label": "Width", "fill": true, "data": data.curList2, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
+                        "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
+                            "xAxes": [{
+                                "gridLines": {
+                                    "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
+                                        "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
+                                }, "ticks": { "fontColor": "#858796", "padding": 20 }
+                            }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
+                        }
+                    }
+                }
+                var chart4 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.curCount2 }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
+
+                var myChart1 = new Chart(ctx1, chart1);
+                var myChart2 = new Chart(ctx2, chart2);
+                var myChart3 = new Chart(ctx3, chart3);
+                var myChart4 = new Chart(ctx4, chart4);
+
+            }
+        };
+        xhttp.open("GET", "/cur_json", true);
+        xhttp.send();
+    }
+    setInterval(cur_request, 10000);
+    cur_request()
+</script>
+
 {% endblock %}

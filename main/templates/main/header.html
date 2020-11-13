@@ -73,14 +73,51 @@
                 return "red";
             }
         }
-    </script>
-    <script>
-        var value_bead = document.getElementById("bead_val").innerHTML;
 
-        function beadValue(value_bead) {
-            if (value_bead > 600 && value_bead < 650) {
+        function Bead_Temp(val) {
+            if (val < 650 && val > 600) {
                 return "green";
-            } else if (value_bead == 600 || value_bead == 650) {
+            } else if (val == 650 || val == 600) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Tread_Pos(val) {
+            if (val < 2 && val > -2) {
+                return "green";
+            } else if (val == 2 || val == -2) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Tread_Speed(val) {
+            if (val < 3 && val > -3) {
+                return "green";
+            } else if (val == 3 || val == -3) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Cur_Time(val) {
+            if (val < 35 && val > 30) {
+                return "green";
+            } else if (val == 35 || val == 30) {
+                return "orange";
+            } else {
+                return "red";
+            }
+        }
+
+        function Cur_Temp(val) {
+            if (val < 250 && val > 200) {
+                return "green";
+            } else if (val == 250 || val == 200) {
                 return "orange";
             } else {
                 return "red";

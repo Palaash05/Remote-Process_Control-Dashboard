@@ -60,7 +60,7 @@
   var ctx1 = document.getElementById('banChart1').getContext('2d');
   var ctx2 = document.getElementById('banChart2').getContext('2d');
 
-  function request() {
+  function ban_request() {
 
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -92,8 +92,8 @@
     xhttp.open("GET", "/ban_json", true);
     xhttp.send();
   }
-  setInterval(request, 10000);
-  request()
+  setInterval(ban_request, 10000);
+  ban_request()
 </script>
 
 {% endblock %}

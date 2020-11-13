@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.http import request
-from .models import Banbury, Fabric
+from .models import Banbury, Curing, Cutter, Fabric, Winder
 import json
 import time
 # Create your views here.
@@ -10,9 +10,18 @@ import time
 dash = 1
 ban = 1
 fab = 1
+bead = 1
+tread = 1
+cur = 1
+
 banList = []
 bandateList = []
 banCount = [0, 0, 0]
+
+beadList = []
+beaddateList = []
+beadCount = [0, 0, 0]
+
 
 fabList1 = []
 fabdateList = []
@@ -20,6 +29,20 @@ fabCount1 = [0, 0, 0]
 fabList2 = []
 fabdateList = []
 fabCount2 = [0, 0, 0]
+
+treadList1 = []
+treaddateList = []
+treadCount1 = [0, 0, 0]
+treadList2 = []
+treaddateList = []
+treadCount2 = [0, 0, 0]
+
+curList1 = []
+curdateList = []
+curCount1 = [0, 0, 0]
+curList2 = []
+curdateList = []
+curCount2 = [0, 0, 0]
 
 
 def dashboard(request):
@@ -33,9 +56,13 @@ def dashboard_json(request):
     dash += 1
     banData = Banbury.objects.get(id=x)
     fabData = Fabric.objects.get(id=x)
+    beadData = Winder.objects.get(id=x)
+    treadData = Cutter.objects.get(id=x)
+    curData = Curing.objects.get(id=x)
 
     data = {"ban_width": banData.sheet_width,
-            "ban_date": str(banData.dateinserted), "fab_temp": fabData.temperature, "fab_date": str(fabData.dateinserted), "fab_w": fabData.sheet_width}
+            "ban_date": str(banData.dateinserted), "fab_temp": fabData.temperature, "fab_date": str(fabData.dateinserted), "fab_w": fabData.sheet_width, "bead_temp": beadData.temperature,
+            "bead_date": str(beadData.dateinserted), "tread_pos": treadData.position_error, "tread_date": str(treadData.dateinserted), "tread_speed": treadData.speed_error, "cur_time": curData.molding_time_mins, "cur_date": str(curData.dateinserted), "cur_temp": curData.temperature}
     return HttpResponse(json.dumps(data))
 
 
@@ -117,12 +144,116 @@ def beadWinder(request):
     return render(request, "main/beadWinder.html")
 
 
-def tread(request):
+def beadWinder_json(request):
+
+    global bead, beadList, beaddateList, beadCount
+
+    if len(beadList) >= 10:
+        beaddateList = beaddateList[-11:-1]
+        beadList = beadList[-11:-1]
+
+    x = bead % 100
+    bead += 1
+    beadData = Winder.objects.get(id=x)
+    temp = beadData.temperature
+    beadList.append(temp)
+
+    if temp < 650 and temp > 600:
+        beadCount[0] += 1
+    elif temp == 650 or temp == 600:
+        beadCount[1] += 1
+    else:
+        beadCount[2] += 1
+    print(beadCount)
+    beaddateList.append(beadData.dateinserted.strftime("%m/%d/%Y, %H:%M:%S"))
+
+    data = {"beadList": beadList, "beaddateList": beaddateList,
+            "temperature": beadData.temperature, "dateinserted": str(beadData.dateinserted), "beadCount": beadCount}
+    return HttpResponse(json.dumps(data))
+
+
+def treadCutter(request):
     return render(request, "main/tread.html")
+
+
+def treadCutter_json(request):
+
+    global tread, treadList1, treadList2, treaddateList, treadCount1, treadCount2
+
+    if len(treadList1) >= 10:
+        treaddateList = treaddateList[-11:-1]
+        treadList1 = treadList1[-11:-1]
+        treadList2 = treadList2[-11:-1]
+
+    x = tread % 100
+    tread += 1
+    treadData = Cutter.objects.get(id=x)
+    pos = treadData.position_error
+    speed = treadData.speed_error
+    treadList1.append(pos)
+    treadList2.append(speed)
+
+    if pos > -2 and pos < 2:
+        treadCount1[0] += 1
+    elif pos == -2 or pos == 2:
+        treadCount1[1] += 1
+    else:
+        treadCount1[2] += 1
+
+    if speed > -3 and speed < 3:
+        treadCount2[0] += 1
+    elif speed == -3 or speed == 3:
+        treadCount2[1] += 1
+    else:
+        treadCount2[2] += 1
+
+    treaddateList.append(treadData.dateinserted.strftime("%m/%d/%Y, %H:%M:%S"))
+
+    data = {"treadList1": treadList1, "treadList2": treadList2, "treaddateList": treaddateList,
+            "tread_pos": pos, "tread_date": str(treadData.dateinserted), "tread_speed": speed, "treadCount1": treadCount1, "treadCount2": treadCount2}
+    return HttpResponse(json.dumps(data))
 
 
 def curing(request):
     return render(request, "main/curing.html")
+
+
+def Curing_json(request):
+
+    global cur, curList1, curList2, curdateList, curCount1, curCount2
+
+    if len(curList1) >= 10:
+        curdateList = curdateList[-11:-1]
+        curList1 = curList1[-11:-1]
+        curList2 = curList2[-11:-1]
+
+    x = cur % 100
+    cur += 1
+    curData = Curing.objects.get(id=x)
+    time = curData.molding_time_mins
+    temp = curData.temperature
+    curList1.append(time)
+    curList2.append(temp)
+
+    if time > 30 and time < 35:
+        curCount1[0] += 1
+    elif time == 30 or time == 35:
+        curCount1[1] += 1
+    else:
+        curCount1[2] += 1
+
+    if temp > 200 and temp < 250:
+        curCount2[0] += 1
+    elif temp == 200 or temp == 250:
+        curCount2[1] += 1
+    else:
+        curCount2[2] += 1
+
+    curdateList.append(curData.dateinserted.strftime("%m/%d/%Y, %H:%M:%S"))
+
+    data = {"curList1": curList1, "curList2": curList2, "curdateList": curdateList,
+            "cur_time": time, "cur_date": str(curData.dateinserted), "cur_temp": temp, "curCount1": curCount1, "curCount2": curCount2}
+    return HttpResponse(json.dumps(data))
 
 
 def stats(request):

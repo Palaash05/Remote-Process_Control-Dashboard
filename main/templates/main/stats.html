@@ -1,8 +1,8 @@
 {% extends "main/header.html" %} {% load static %} {% block content %}
 
-<h3 class="text-dark mb-4" style="margin-top: 25px">
-    &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Plant Statistics<button
-        class="btn btn-dark active btn-sm d-none float-right d-sm-inline-block" type="button" style="margin-left: 0px">
+<h3 class="text-dark font-weight-bolder mb-4" style="margin-top: 25px; margin-left: 30px">
+    Plant Statistics<button class="btn btn-dark active btn-sm d-none float-right d-sm-inline-block" type="button"
+        style="margin-left: 0px">
         <i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report
     </button>
 </h3>
@@ -11,30 +11,12 @@
         <p class="text-primary m-0 font-weight-bold">Employee Info</p>
     </div>
     <div class="card-body">
-        <div class="row">
-            <div class="col-md-6 text-nowrap">
-                <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable">
-                    <label>Show&nbsp;<select class="form-control form-control-sm custom-select custom-select-sm">
-                            <option value="10" selected="">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select>&nbsp;</label>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="text-md-right dataTables_filter" id="dataTable_filter">
-                    <label><input type="search" class="form-control form-control-sm" aria-controls="dataTable"
-                            placeholder="Search" /></label>
-                </div>
-            </div>
-        </div>
         <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
             <table class="table my-0" id="dataTable">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Position</th>
+                        <th>Date and Time</th>
+                        <th>Sheet Width</th>
                         <th>Office</th>
                         <th>Age</th>
                         <th>Start date</th>

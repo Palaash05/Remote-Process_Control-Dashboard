@@ -23,11 +23,14 @@ urlpatterns = [
     path('banbury', views.banbury, name="banbury"),
     path('fabCalendar', views.fabCalendar, name="fabCalendar"),
     path('beadWinder', views.beadWinder, name="beadWinder"),
-    path('tread', views.tread, name="tread"),
+    path('tread', views.treadCutter, name="tread"),
     path('curing', views.curing, name="curing"),
     path('stats', views.stats, name="stats"),
-    path('ban_json', views.banbury_json, name="ban_json"),
     path('dash_json', views.dashboard_json, name="dash_json"),
+    path('ban_json', views.banbury_json, name="ban_json"),
     path('fab_json', views.fabric_json, name="fab_json"),
+    path('bead_json', views.beadWinder_json, name="bead_json"),
+    path('tread_json', views.treadCutter_json, name="tread_json"),
+    path('cur_json', views.Curing_json, name="cur_json"),
 
 ]
