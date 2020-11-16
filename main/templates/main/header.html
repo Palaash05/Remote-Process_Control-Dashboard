@@ -834,7 +834,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
 
-                    if (data.sheet_width > 24 && data.sheet_width < 16) {
+                    if (data.sheet_width > 24 || data.sheet_width < 16) {
                         toastr.error('Banbury width Alert!');
 
                     }
@@ -851,11 +851,11 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
                     console.log(data.fab_w)
-                    if (data.fab_w > 1.5 && data.fab_w < 0.5) {
+                    if (data.fab_w > 1.5 || data.fab_w < 0.5) {
                         toastr.error('Fabric width Alert!');
                     }
 
-                    if (data.fab_temp > 600 && data.fab_temp < 500) {
+                    if (data.fab_temp > 600 || data.fab_temp < 500) {
                         toastr.error('Fabric temperature Alert!');
                     }
 
@@ -872,7 +872,7 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
                     //  console.log(data.temperature)
-                    if (data.temperature > 700 && data.temperature < 600) {
+                    if (data.temperature > 700 || data.temperature < 600) {
 
                         toastr.error('Bead Winder temperature Alert!');
 
@@ -890,12 +890,12 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
 
-                    if (data.tread_pos > 2 && data.tread_pos < -2) {
+                    if (data.tread_pos > 2 || data.tread_pos < -2) {
 
                         toastr.error('Treading cutter position Alert!');
 
                     }
-                    if (data.tread_speed > 3 && data.tread_speed < -3) {
+                    if (data.tread_speed > 3 || data.tread_speed < -3) {
 
                         toastr.error('Treading cutter speed Alert!');
 
@@ -913,13 +913,13 @@
                 if (this.readyState == 4 && this.status == 200) {
                     var data = JSON.parse(xhttp.responseText);
 
-                    if (data.cur_time > 35 && data.cur_time < 30) {
+                    if (data.cur_time > 35 || data.cur_time < 30) {
 
                         toastr.error('Curing machine time Alert!');
 
                     }
 
-                    if (data.cur_temp > 250 && data.cur_temp < 200) {
+                    if (data.cur_temp > 250 || data.cur_temp < 200) {
 
                         toastr.error('Curing machine temperature Alert!');
 
