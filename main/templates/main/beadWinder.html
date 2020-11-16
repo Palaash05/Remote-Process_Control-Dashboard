@@ -54,43 +54,18 @@
 </div>
 
 <script>
-    var ctx1 = document.getElementById('beadChart1').getContext('2d');
-    var ctx2 = document.getElementById('beadChart2').getContext('2d');
 
-    function bead_request() {
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-
-                // Typical action to be performed when the document is ready:
-                var data = JSON.parse(xhttp.responseText);
-                document.getElementById("bead_val").innerText = data.temperature
-                document.getElementById("bead_date").innerText = data.dateinserted
-                document.getElementById("bead_val").style.color = Bead_Temp(data.temperature);
-                document.getElementById("bead_unit").style.color = Bead_Temp(data.temperature);
-                var chart1 = {
-                    "type": "line", "data": { "labels": data.beaddateList, "datasets": [{ "label": "Width", "fill": true, "data": data.beadList, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
-                        "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
-                            "xAxes": [{
-                                "gridLines": {
-                                    "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
-                                        "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
-                                }, "ticks": { "fontColor": "#858796", "padding": 20 }
-                            }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
-                        }
-                    }
-                }
-                var chart2 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.beadCount }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
-                var myChart1 = new Chart(ctx1, chart1);
-                var myChart2 = new Chart(ctx2, chart2);
-            }
-        };
-        xhttp.open("GET", "/bead_json", true);
-        xhttp.send();
-    }
     setInterval(bead_request, 10000);
-    bead_request()
+    setInterval(ban_alert, 10000);
+    setInterval(fab_alert, 10000);
+    setInterval(tread_alert, 10000);
+    setInterval(cur_alert, 10000);
+    cur_alert();
+    tread_alert();
+    fab_alert();
+    ban_alert();
+    bead_request();
+
 </script>
 
 {% endblock %}

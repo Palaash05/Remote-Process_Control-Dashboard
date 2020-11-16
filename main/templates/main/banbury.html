@@ -6,7 +6,6 @@
   </h2>
 </div>
 <div class="row flex-lg-fill">
-
   <div class="col-lg-6 col-xl-8">
     <div class="card shadow mb-4">
       <div class="card-body pb-0">
@@ -15,7 +14,9 @@
           Sheet Width
         </h4>
         <!-- Text -->
-        <p class="card-text mb-4 text-right" id="datetime">{{banData.dateinserted}}</p>
+        <p class="card-text mb-4 text-right" id="datetime">
+          {{banData.dateinserted}}
+        </p>
         <p class="display-5">Current reading:</p>
         <div class="row">
           <p class="display-4 font-weight-bold" id="ban_val">
@@ -57,43 +58,17 @@
 </div>
 
 <script>
-  var ctx1 = document.getElementById('banChart1').getContext('2d');
-  var ctx2 = document.getElementById('banChart2').getContext('2d');
 
-  function ban_request() {
-
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-
-        // Typical action to be performed when the document is ready:
-        var data = JSON.parse(xhttp.responseText);
-        document.getElementById('ban_val').innerText = data.sheet_width
-        document.getElementById('datetime').innerText = data.dateinserted
-        document.getElementById("ban_val").style.color = Ban_Value(data.sheet_width);
-        document.getElementById("ban_unit").style.color = Ban_Value(data.sheet_width);
-        var chart1 = {
-          "type": "line", "data": { "labels": data.bandateList, "datasets": [{ "label": "Width", "fill": true, "data": data.banList, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
-            "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
-              "xAxes": [{
-                "gridLines": {
-                  "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
-                    "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
-                }, "ticks": { "fontColor": "#858796", "padding": 20 }
-              }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
-            }
-          }
-        }
-        var chart2 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.banCount }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
-        var myChart1 = new Chart(ctx1, chart1);
-        var myChart2 = new Chart(ctx2, chart2);
-      }
-    };
-    xhttp.open("GET", "/ban_json", true);
-    xhttp.send();
-  }
   setInterval(ban_request, 10000);
-  ban_request()
+  setInterval(fab_alert, 10000);
+  setInterval(bead_alert, 10000);
+  setInterval(tread_alert, 10000);
+  setInterval(cur_alert, 10000);
+  cur_alert();
+  tread_alert();
+  bead_alert();
+  fab_alert();
+  ban_request();
 </script>
 
 {% endblock %}

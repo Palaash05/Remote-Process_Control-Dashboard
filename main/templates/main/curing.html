@@ -102,69 +102,18 @@
 </div>
 
 <script>
-    var ctx1 = document.getElementById('curChart1').getContext('2d');
-    var ctx2 = document.getElementById('curChart2').getContext('2d');
-    var ctx3 = document.getElementById('curChart3').getContext('2d');
-    var ctx4 = document.getElementById('curChart4').getContext('2d');
 
-    function cur_request() {
-
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-
-                // Typical action to be performed when the document is ready:
-                var data = JSON.parse(xhttp.responseText);
-                document.getElementById('cur_time').innerText = data.cur_time
-                document.getElementById('cur_date1').innerText = data.cur_date
-                document.getElementById("cur_time").style.color = Cur_Time(data.cur_time);
-                document.getElementById("cur_unit1").style.color = Cur_Time(data.cur_time);
-
-                document.getElementById('cur_temp').innerText = data.cur_temp
-                document.getElementById('cur_date2').innerText = data.cur_date
-                document.getElementById("cur_temp").style.color = Cur_Temp(data.cur_temp);
-                document.getElementById("cur_unit2").style.color = Cur_Temp(data.cur_temp);
-
-                var chart1 = {
-                    "type": "line", "data": { "labels": data.curdateList, "datasets": [{ "label": "Width", "fill": true, "data": data.curList1, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
-                        "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
-                            "xAxes": [{
-                                "gridLines": {
-                                    "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
-                                        "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
-                                }, "ticks": { "fontColor": "#858796", "padding": 20 }
-                            }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
-                        }
-                    }
-                }
-                var chart2 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.curCount1 }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
-
-                var chart3 = {
-                    "type": "line", "data": { "labels": data.curdateList, "datasets": [{ "label": "Width", "fill": true, "data": data.curList2, "backgroundColor": "rgba(78, 115, 223, 0.05)", "borderColor": "rgba(78, 115, 223, 1)" }] }, "options": {
-                        "maintainAspectRatio": false, "legend": { "display": true }, "title": {}, "scales": {
-                            "xAxes": [{
-                                "gridLines": {
-                                    "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": [
-                                        "2"], "zeroLineBorderDash": ["2"], "drawOnChartArea": false
-                                }, "ticks": { "fontColor": "#858796", "padding": 20 }
-                            }], "yAxes": [{ "gridLines": { "color": "rgb(234, 236, 244)", "zeroLineColor": "rgb(234, 236, 244)", "drawBorder": false, "drawTicks": false, "borderDash": ["2"], "zeroLineBorderDash": ["2"] }, "ticks": { "fontColor": "#858796", "padding": 20 } }]
-                        }
-                    }
-                }
-                var chart4 = { "type": "doughnut", "data": { "labels": ["Success", "Warning", "Danger"], "datasets": [{ "label": "", "backgroundColor": ["green", "orange", "red"], "borderColor": ["#ffffff", "#ffffff", "#ffffff"], "data": data.curCount2 }] }, "options": { "maintainAspectRatio": false, "legend": { "display": false }, "title": {} } }
-
-                var myChart1 = new Chart(ctx1, chart1);
-                var myChart2 = new Chart(ctx2, chart2);
-                var myChart3 = new Chart(ctx3, chart3);
-                var myChart4 = new Chart(ctx4, chart4);
-
-            }
-        };
-        xhttp.open("GET", "/cur_json", true);
-        xhttp.send();
-    }
     setInterval(cur_request, 10000);
-    cur_request()
+    setInterval(ban_alert, 10000);
+    setInterval(fab_alert, 10000);
+    setInterval(bead_alert, 10000);
+    setInterval(tread_alert, 10000);
+    tread_alert();
+    bead_alert();
+    fab_alert();
+    ban_alert();
+    cur_request();
+
 </script>
 
 {% endblock %}

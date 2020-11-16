@@ -52,7 +52,7 @@ def dashboard(request):
 def dashboard_json(request):
     global dash
 
-    x = dash % 100
+    x = dash % 1000
     dash += 1
     banData = Banbury.objects.get(id=x)
     fabData = Fabric.objects.get(id=x)
@@ -74,19 +74,20 @@ def banbury_json(request):
 
     global ban, banList, bandateList, banCount
 
-    if len(banList) >= 10:
-        bandateList = bandateList[-11:-1]
-        banList = banList[-11:-1]
-
-    x = ban % 100
+    x = ban % 1000
     ban += 1
     banData = Banbury.objects.get(id=x)
     width = banData.sheet_width
     banList.append(width)
 
-    if width > 18 and width < 22:
+    if len(banList) >= 10:
+        while len(banList) > 10:
+            bandateList.pop(0)
+            banList.pop(0)
+
+    if width > 16 and width < 24:
         banCount[0] += 1
-    elif width == 22 or width == 10:
+    elif width == 16 or width == 24:
         banCount[1] += 1
     else:
         banCount[2] += 1
@@ -107,11 +108,12 @@ def fabric_json(request):
     global fab, fabList1, fabList2, fabdateList, fabCount1, fabCount2
 
     if len(fabList1) >= 10:
-        fabdateList = fabdateList[-11:-1]
-        fabList1 = fabList1[-11:-1]
-        fabList2 = fabList2[-11:-1]
+        while len(fabList1) > 10:
+            fabdateList.pop(0)
+            fabList1.pop(0)
+            fabList2.pop(0)
 
-    x = fab % 100
+    x = fab % 1000
     fab += 1
     fabData = Fabric.objects.get(id=x)
     width = fabData.sheet_width
@@ -119,9 +121,9 @@ def fabric_json(request):
     fabList1.append(temp)
     fabList2.append(width)
 
-    if temp > 520 and temp < 500:
+    if temp < 600 and temp > 500:
         fabCount1[0] += 1
-    elif temp == 520 or temp == 500:
+    elif temp == 600 or temp == 500:
         fabCount1[1] += 1
     else:
         fabCount1[2] += 1
@@ -149,18 +151,19 @@ def beadWinder_json(request):
     global bead, beadList, beaddateList, beadCount
 
     if len(beadList) >= 10:
-        beaddateList = beaddateList[-11:-1]
-        beadList = beadList[-11:-1]
+        while len(beadList) > 10:
+            beaddateList.pop(0)
+            beadList.pop(0)
 
-    x = bead % 100
+    x = bead % 1000
     bead += 1
     beadData = Winder.objects.get(id=x)
     temp = beadData.temperature
     beadList.append(temp)
 
-    if temp < 650 and temp > 600:
+    if temp < 700 and temp > 600:
         beadCount[0] += 1
-    elif temp == 650 or temp == 600:
+    elif temp == 700 or temp == 600:
         beadCount[1] += 1
     else:
         beadCount[2] += 1
@@ -181,11 +184,12 @@ def treadCutter_json(request):
     global tread, treadList1, treadList2, treaddateList, treadCount1, treadCount2
 
     if len(treadList1) >= 10:
-        treaddateList = treaddateList[-11:-1]
-        treadList1 = treadList1[-11:-1]
-        treadList2 = treadList2[-11:-1]
+        while len(treadList1) > 10:
+            treaddateList.pop(0)
+            treadList1.pop(0)
+            treadList2.pop(0)
 
-    x = tread % 100
+    x = tread % 1000
     tread += 1
     treadData = Cutter.objects.get(id=x)
     pos = treadData.position_error
@@ -223,11 +227,12 @@ def Curing_json(request):
     global cur, curList1, curList2, curdateList, curCount1, curCount2
 
     if len(curList1) >= 10:
-        curdateList = curdateList[-11:-1]
-        curList1 = curList1[-11:-1]
-        curList2 = curList2[-11:-1]
+        while len(curList2) > 10:
+            curdateList.pop(0)
+            curList1.pop(0)
+            curList2.pop(0)
 
-    x = cur % 100
+    x = cur % 1000
     cur += 1
     curData = Curing.objects.get(id=x)
     time = curData.molding_time_mins
