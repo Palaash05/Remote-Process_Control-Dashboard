@@ -6,7 +6,10 @@ import json
 import time
 # Create your views here.
 
-
+'''
+Global variables
+'''
+# For traversing through the IDs
 dash = 1
 ban = 1
 fab = 1
@@ -14,14 +17,16 @@ bead = 1
 tread = 1
 cur = 1
 
+# For storing last ten values
 banList = []
+# Dates for the values
 bandateList = []
+# For case count
 banCount = [0, 0, 0]
 
 beadList = []
 beaddateList = []
 beadCount = [0, 0, 0]
-
 
 fabList1 = []
 fabdateList = []
@@ -44,25 +49,38 @@ curList2 = []
 curdateList = []
 curCount2 = [0, 0, 0]
 
+'''
+Functions for APIs and Rendering
+'''
+
 
 def dashboard(request):
+    # For page rendering
+
     return render(request, "main/dashboard.html", context={})
 
 
 def dashboard_json(request):
+    # For API
+
     global dash
 
+    # Incrementing the ID
     x = dash % 1000
     dash += 1
+
+    # Accesong the objects
     banData = Banbury.objects.get(id=x)
     fabData = Fabric.objects.get(id=x)
     beadData = Winder.objects.get(id=x)
     treadData = Cutter.objects.get(id=x)
     curData = Curing.objects.get(id=x)
 
+    # Data dictionary for API
     data = {"ban_width": banData.sheet_width,
             "ban_date": str(banData.dateinserted), "fab_temp": fabData.temperature, "fab_date": str(fabData.dateinserted), "fab_w": fabData.sheet_width, "bead_temp": beadData.temperature,
             "bead_date": str(beadData.dateinserted), "tread_pos": treadData.position_error, "tread_date": str(treadData.dateinserted), "tread_speed": treadData.speed_error, "cur_time": curData.molding_time_mins, "cur_date": str(curData.dateinserted), "cur_temp": curData.temperature}
+
     return HttpResponse(json.dumps(data))
 
 
@@ -76,22 +94,28 @@ def banbury_json(request):
 
     x = ban % 1000
     ban += 1
+
     banData = Banbury.objects.get(id=x)
+
     width = banData.sheet_width
+
     banList.append(width)
 
+    # Popping the first element at every tenth increment
     if len(banList) >= 10:
         while len(banList) > 10:
             bandateList.pop(0)
             banList.pop(0)
 
+    # Storing counts
     if width > 16 and width < 24:
         banCount[0] += 1
     elif width == 16 or width == 24:
         banCount[1] += 1
     else:
         banCount[2] += 1
-    print(banCount)
+
+    # Appending date in string format
     bandateList.append(banData.dateinserted.strftime("%m/%d/%Y, %H:%M:%S"))
 
     data = {"banList": banList, "bandateList": bandateList,
@@ -115,9 +139,12 @@ def fabric_json(request):
 
     x = fab % 1000
     fab += 1
+
     fabData = Fabric.objects.get(id=x)
+
     width = fabData.sheet_width
     temp = fabData.temperature
+
     fabList1.append(temp)
     fabList2.append(width)
 
@@ -139,6 +166,7 @@ def fabric_json(request):
 
     data = {"fabList1": fabList1, "fabList2": fabList2, "fabdateList": fabdateList,
             "fab_temp": temp, "fab_date": str(fabData.dateinserted), "fab_w": width, "fabCount1": fabCount1, "fabCount2": fabCount2}
+
     return HttpResponse(json.dumps(data))
 
 
@@ -157,7 +185,9 @@ def beadWinder_json(request):
 
     x = bead % 1000
     bead += 1
+
     beadData = Winder.objects.get(id=x)
+
     temp = beadData.temperature
     beadList.append(temp)
 
@@ -167,11 +197,12 @@ def beadWinder_json(request):
         beadCount[1] += 1
     else:
         beadCount[2] += 1
-    print(beadCount)
+
     beaddateList.append(beadData.dateinserted.strftime("%m/%d/%Y, %H:%M:%S"))
 
     data = {"beadList": beadList, "beaddateList": beaddateList,
             "temperature": beadData.temperature, "dateinserted": str(beadData.dateinserted), "beadCount": beadCount}
+
     return HttpResponse(json.dumps(data))
 
 
@@ -191,9 +222,12 @@ def treadCutter_json(request):
 
     x = tread % 1000
     tread += 1
+
     treadData = Cutter.objects.get(id=x)
+
     pos = treadData.position_error
     speed = treadData.speed_error
+
     treadList1.append(pos)
     treadList2.append(speed)
 
@@ -215,6 +249,7 @@ def treadCutter_json(request):
 
     data = {"treadList1": treadList1, "treadList2": treadList2, "treaddateList": treaddateList,
             "tread_pos": pos, "tread_date": str(treadData.dateinserted), "tread_speed": speed, "treadCount1": treadCount1, "treadCount2": treadCount2}
+
     return HttpResponse(json.dumps(data))
 
 
@@ -234,9 +269,12 @@ def Curing_json(request):
 
     x = cur % 1000
     cur += 1
+
     curData = Curing.objects.get(id=x)
+
     time = curData.molding_time_mins
     temp = curData.temperature
+
     curList1.append(time)
     curList2.append(temp)
 
@@ -258,6 +296,7 @@ def Curing_json(request):
 
     data = {"curList1": curList1, "curList2": curList2, "curdateList": curdateList,
             "cur_time": time, "cur_date": str(curData.dateinserted), "cur_temp": temp, "curCount1": curCount1, "curCount2": curCount2}
+
     return HttpResponse(json.dumps(data))
 
 

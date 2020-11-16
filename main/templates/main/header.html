@@ -129,6 +129,12 @@
                     document.getElementById("ban_unit").style.color = Ban_Value(
                         data.sheet_width
                     );
+
+                    if (data.sheet_width > 24 || data.sheet_width < 16) {
+                        toastr.error('Banbury width Alert!');
+
+                    }
+
                     var chart1 = {
                         type: "line",
                         data: {
@@ -232,13 +238,21 @@
                         data.fab_w
                     );
 
+                    if (data.fab_w > 1.5 || data.fab_w < 0.5) {
+                        toastr.error('Fabric width Alert!');
+                    }
+
+                    if (data.fab_temp > 600 || data.fab_temp < 500) {
+                        toastr.error('Fabric temperature Alert!');
+                    }
+
                     var chart1 = {
                         type: "line",
                         data: {
                             labels: data.fabdateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Temperature",
                                     fill: true,
                                     data: data.fabList1,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
@@ -397,13 +411,20 @@
                     document.getElementById("bead_unit").style.color = Bead_Temp(
                         data.temperature
                     );
+
+                    if (data.temperature > 700 || data.temperature < 600) {
+
+                        toastr.error('Bead Winder temperature Alert!');
+
+                    }
+
                     var chart1 = {
                         type: "line",
                         data: {
                             labels: data.beaddateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Temperature",
                                     fill: true,
                                     data: data.beadList,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
@@ -502,13 +523,24 @@
                         data.tread_speed
                     );
 
+                    if (data.tread_pos > 2 || data.tread_pos < -2) {
+
+                        toastr.error('Treading cutter position Alert!');
+
+                    }
+                    if (data.tread_speed > 3 || data.tread_speed < -3) {
+
+                        toastr.error('Treading cutter speed Alert!');
+
+                    }
+
                     var chart1 = {
                         type: "line",
                         data: {
                             labels: data.treaddateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Position Error",
                                     fill: true,
                                     data: data.treadList1,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
@@ -577,7 +609,7 @@
                             labels: data.treaddateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Speed Error",
                                     fill: true,
                                     data: data.treadList2,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
@@ -680,13 +712,25 @@
                         data.cur_temp
                     );
 
+                    if (data.cur_time > 35 || data.cur_time < 30) {
+
+                        toastr.error('Curing machine time Alert!');
+
+                    }
+
+                    if (data.cur_temp > 250 || data.cur_temp < 200) {
+
+                        toastr.error('Curing machine temperature Alert!');
+
+                    }
+
                     var chart1 = {
                         type: "line",
                         data: {
                             labels: data.curdateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Time",
                                     fill: true,
                                     data: data.curList1,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
@@ -755,7 +799,7 @@
                             labels: data.curdateList,
                             datasets: [
                                 {
-                                    label: "Width",
+                                    label: "Temperature",
                                     fill: true,
                                     data: data.curList2,
                                     backgroundColor: "rgba(78, 115, 223, 0.05)",
