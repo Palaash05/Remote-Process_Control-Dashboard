@@ -13,19 +13,16 @@
     <link rel="stylesheet" href="{% static 'fonts/fontawesome-all.min.css' %}" />
     <link rel="stylesheet" href="{% static 'css/sidebar.css' %}" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
     <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
-    <!--<script src="{% static 'js/chart.min.js' %}"></script>-->
     <script src="{% static 'js/bs-init.js' %}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="{% static 'js/sidebar.js' %}"></script>
-    <script src="{% static 'js/theme.js' %}"></script>
 
     <script>
         function Ban_Value(val) {
@@ -112,6 +109,60 @@
         toastr.options.tapToDismiss = false;
         toastr.options.timeOut = 10000;
 
+        function dash_request() {
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+
+                    // Typical action to be performed when the document is ready:
+                    var data = JSON.parse(xhttp.responseText);
+                    document.getElementById("dash_ban_val").innerText = data.dash_ban_width
+                    document.getElementById("dash_ban_date").innerText = data.dash_ban_date
+                    document.getElementById("dash_ban_val").style.color = Ban_Value(data.dash_ban_width);
+                    document.getElementById("dash_ban_unit").style.color = Ban_Value(data.dash_ban_width);
+
+                    document.getElementById("dash_fab_temp").innerText = data.dash_fab_temp
+                    document.getElementById("dash_fab_date1").innerText = data.dash_fab_date
+                    document.getElementById("dash_fab_temp").style.color = Fab_Temp(data.dash_fab_temp);
+                    document.getElementById("dash_fab_Tunit").style.color = Fab_Temp(data.dash_fab_temp);
+
+                    document.getElementById("dash_fab_w").innerText = data.dash_fab_w
+                    document.getElementById("dash_fab_date2").innerText = data.dash_fab_date
+                    document.getElementById("dash_fab_w").style.color = Fab_W(data.dash_fab_w);
+                    document.getElementById("dash_fab_Wunit").style.color = Fab_W(data.dash_fab_w);
+
+                    document.getElementById("dash_bead_val").innerText = data.dash_bead_temp
+                    document.getElementById("dash_bead_date").innerText = data.dash_bead_date
+                    document.getElementById("dash_bead_val").style.color = Bead_Temp(data.dash_bead_temp);
+                    document.getElementById("dash_bead_unit").style.color = Bead_Temp(data.dash_bead_temp);
+
+                    document.getElementById("dash_tread_pos").innerText = data.dash_tread_pos
+                    document.getElementById("dash_tread_date1").innerText = data.dash_tread_date
+                    document.getElementById("dash_tread_pos").style.color = Tread_Pos(data.dash_tread_pos);
+                    document.getElementById("dash_tread_unit1").style.color = Tread_Pos(data.dash_tread_pos);
+
+                    document.getElementById("dash_tread_speed").innerText = data.dash_tread_speed
+                    document.getElementById("dash_tread_date2").innerText = data.dash_tread_date
+                    document.getElementById("dash_tread_speed").style.color = Tread_Speed(data.dash_tread_speed);
+                    document.getElementById("dash_tread_unit2").style.color = Tread_Speed(data.dash_tread_speed);
+
+                    document.getElementById("dash_cur_time").innerText = data.dash_cur_time
+                    document.getElementById("dash_cur_date1").innerText = data.dash_cur_date
+                    document.getElementById("dash_cur_time").style.color = Cur_Time(data.dash_cur_time);
+                    document.getElementById("dash_cur_unit1").style.color = Cur_Time(data.dash_cur_time);
+
+                    document.getElementById("dash_cur_temp").innerText = data.dash_cur_temp
+                    document.getElementById("dash_cur_date2").innerText = data.dash_cur_date
+                    document.getElementById("dash_cur_temp").style.color = Cur_Temp(data.dash_cur_temp);
+                    document.getElementById("dash_cur_unit2").style.color = Cur_Temp(data.dash_cur_temp);
+
+                }
+            };
+            xhttp.open("GET", "/dash_json", true);
+            xhttp.send();
+        }
+
         function ban_request() {
             var ctx1 = document.getElementById("banChart1").getContext("2d");
             var ctx2 = document.getElementById("banChart2").getContext("2d");
@@ -122,7 +173,7 @@
                     // Typical action to be performed when the document is ready:
                     var data = JSON.parse(xhttp.responseText);
                     document.getElementById("ban_val").innerText = data.sheet_width;
-                    document.getElementById("datetime").innerText = data.dateinserted;
+                    document.getElementById("ban_date").innerText = data.dateinserted;
                     document.getElementById("ban_val").style.color = Ban_Value(
                         data.sheet_width
                     );
@@ -872,6 +923,19 @@
             xhttp.send();
         }
 
+        function dash_alert() {
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var data = JSON.parse(xhttp.responseText);
+
+                }
+
+            }
+            xhttp.open("GET", "/dash_json", true);
+            xhttp.send();
+        }
+
         function ban_alert() {
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function () {
@@ -985,19 +1049,6 @@
             <div id="content">
                 <div class="container-fluid">{% block content %} {% endblock %}</div>
             </div>
-
-            <!--<div class="footer fixed-bottom bg-light text-center font-weight-bolder" id="alert">
-                <footer style="height: 100px;">
-                    <p style="color: red;" id="alert_val1"></p>
-                    <p style="color: red;" id="alert_val2"></p>
-                    <p style="color: red;" id="alert_val3"></p>
-                    <p style="color: red;" id="alert_val4"></p>
-                    <p style="color: red;" id="alert_val5"></p>
-                    <p style="color: red;" id="alert_val6"></p>
-                    <p style="color: red;" id="alert_val7"></p>
-                    <p style="color: red;" id="alert_val8"></p>
-                </footer>
-            </div>-->
             <footer class="bg-white sticky-footer" id="credits">
                 <div class="container my-auto">
                     <div class="text-center my-auto copyright">
@@ -1010,6 +1061,10 @@
 
         <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
+
+    <!--<script src="{% static 'js/chart.min.js' %}"></script>-->
+    <script src="{% static 'js/sidebar.js' %}"></script>
+    <script src="{% static 'js/theme.js' %}"></script>
 </body>
 
 </html>

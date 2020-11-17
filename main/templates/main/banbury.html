@@ -14,7 +14,7 @@
           Sheet Width
         </h4>
         <!-- Text -->
-        <p class="card-text mb-4 text-right" id="datetime">
+        <p class="card-text mb-4 text-right" id="ban_date">
           {{banData.dateinserted}}
         </p>
         <p class="display-5">Current reading:</p>
@@ -64,7 +64,9 @@
   setInterval(bead_alert, 10000);
   setInterval(tread_alert, 10000);
   setInterval(cur_alert, 10000);
+  setInterval(dash_alert, 10000);
 
+  dash_alert();
   cur_alert();
   tread_alert();
   bead_alert();
